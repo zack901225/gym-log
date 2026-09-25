@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#141716">
+  <meta name="description" content="少一點打字，多專注一組。離線也能使用的私人健身紀錄。">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="好好練">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <title>好好練 · 健身紀錄</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="brand"><a href="#today" aria-label="好好練首頁"><span class="brand-mark">Ⅱ</span> 好好練 <span class="wordmark">ONE MORE SET</span></a><span id="connection" class="status">本機紀錄</span></header>
+    <main id="app"><div class="empty">正在讀取你的紀錄…</div></main>
+    <nav class="bottom-nav" aria-label="主要導覽">
+      <a href="#today" data-nav="today"><span aria-hidden="true">◷</span>今天<small>Today</small></a>
+      <a href="#history" data-nav="history"><span aria-hidden="true">▤</span>歷史<small>History</small></a>
+      <a href="#exercises" data-nav="exercises"><span aria-hidden="true">⊞</span>動作庫<small>Exercises</small></a>
+      <a href="#settings" data-nav="settings"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3" fill="var(--bg)"/><circle cx="15" cy="17" r="3" fill="var(--bg)"/></svg></span>設定<small>Settings</small></a>
+    </nav>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <noscript>請開啟 JavaScript，才能使用本機健身紀錄。</noscript>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

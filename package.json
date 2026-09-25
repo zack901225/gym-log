@@ -1,0 +1,11 @@
+{
+  "name": "one-more-set",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test tests/model.test.mjs",
+    "check": "node --check dist/app.js && node --check dist/model.js && node --check dist/storage.js && node --check dist/sw.js"
+  }
+}
