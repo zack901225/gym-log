@@ -34,7 +34,7 @@ export function details(entry, type, unit = 'kg') {
   if (type === 'strength') return entry.sets.map(s => `${toDisplay(s.weight, unit)} ${unit} × ${s.reps}${s.rpe ? ` · RPE ${s.rpe}` : ''}`);
   const out = [];
   if (entry.speed) out.push(`${entry.speed} km/h`);
-  if (type === 'cardio') out.push(`坡度 ${entry.incline || 0}%`);
+  if (type === 'cardio' || entry.speed || entry.incline) out.push(`坡度 ${entry.incline || 0}%`);
   if (entry.duration) out.push(`${entry.duration} min`);
   if (type === 'warmup') { if (entry.reps) out.push(`${entry.reps} reps`); if (entry.sets) out.push(`${entry.sets} sets`); }
   if (type === 'cardio' && entry.distance !== null && entry.distance > 0) out.push(`${entry.distance} km`);
@@ -91,7 +91,10 @@ export function validateData(input) {
           Object.assign(row, { duration: e.duration, speed: e.speed, completed: e.completed });
           if (type === 'warmup') {
             if (!num(e.reps, 10000, true) || !num(e.sets, 1000, true)) fail('熱身次數無效');
-            Object.assign(row, { reps: e.reps, sets: e.sets });
+            // Version 1 backups and existing workouts may predate warm-up incline.
+            const incline = e.incline === undefined ? 0 : e.incline;
+            if (!num(incline, 100)) fail('熱身坡度無效');
+            Object.assign(row, { reps: e.reps, sets: e.sets, incline });
           } else {
             if (!num(e.incline, 100) || !(e.distance === null || num(e.distance, 10000))) fail('坡度或距離無效');
             Object.assign(row, { incline: e.incline, distance: e.distance });

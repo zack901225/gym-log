@@ -4,7 +4,7 @@
 
 ## 結果
 
-- Node.js：7 項資料模型測試通過。
+- Node.js：8 項資料模型測試通過。
 - Chrome 手機尺寸模擬：19 項完整操作測試通過，沒有 console error 或未捕捉的 runtime error。
 - WebKit 26.5／iPhone 13 模擬：9 項相容性檢查通過，沒有未捕捉的 runtime error。
 - JavaScript 語法檢查通過。
@@ -19,7 +19,7 @@
 | 修改 Exercise | 修改名稱後讀回 IndexedDB；通過 |
 | 刪除 Exercise | 動作庫移除，過去名稱快照與組數仍保留；通過 |
 | Favorite | 設定、取消、重新設定；通過 |
-| Warm-up | 儲存速度／時間；WebKit 另測 15 reps × 2 sets；通過 |
+| Warm-up | 儲存速度／坡度／時間，坡度保留於歷史、複製文字、JSON 與上次值；WebKit 另測 15 reps × 2 sets；通過 |
 | Strength | ±5／±1 操作、連續三組、RPE、備註；通過 |
 | 每組編輯與刪除 | 修改第二組次數、刪除第二組後讀回；通過 |
 | Cardio | 速度、坡度、時間、距離儲存；通過 |
@@ -46,7 +46,7 @@
 
 WebKit 的 `setOffline(true)` 在 Service Worker 導覽有已知測試工具問題，因此 WebKit 測試改用關閉實際 origin 的方式驗證，而 Chrome 仍執行真正的離線模擬。問題紀錄：[Playwright #42775](https://github.com/microsoft/playwright/issues/42775)。
 
-GitHub Pages workflow 已提供並依官方文件核對；尚未在使用者 repository 執行，沒有宣稱已發布公開網站。實驗性 WebMCP 只在瀏覽器提供 API 時註冊唯讀工具；目前瀏覽器未提供原生 WebMCP，因此未驗證其實際註冊，這不影響 App 的任何必要功能。
+GitHub Pages workflow 已在使用者 repository 成功執行，網站位於 https://zack901225.github.io/gym-log/ 。實驗性 WebMCP 只在瀏覽器提供 API 時註冊唯讀工具；目前瀏覽器未提供原生 WebMCP，因此未驗證其實際註冊，這不影響 App 的任何必要功能。
 
 ## 重現方式
 

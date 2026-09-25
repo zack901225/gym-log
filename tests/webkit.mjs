@@ -26,6 +26,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.locator('[data-nav=today]').click(); await click('＋ 新增熱身項目'); await page.locator('.list-main[data-action=choose]').filter({ hasText: /^Band Pull Apart/ }).click();
   await page.getByRole('spinbutton', { name: '時間', exact: true }).fill('0'); await page.getByRole('spinbutton', { name: '次數', exact: true }).fill('15'); await page.getByRole('spinbutton', { name: '組數', exact: true }).fill('2'); await click('✓ 完成熱身'); await toast('已儲存');
+  await click('＋ 新增熱身項目'); await page.locator('.list-main[data-action=choose]').filter({ hasText: /^Treadmill Warm-up/ }).click(); await click('坡度 增加 1'); await page.getByRole('spinbutton', { name: '坡度', exact: true }).fill('3.5'); await click('✓ 完成熱身'); await toast('已儲存');
   await click('＋ 新增有氧項目'); await page.locator('.list-main[data-action=choose]').filter({ hasText: /^Treadmill/ }).click(); await page.getByRole('spinbutton', { name: '時間', exact: true }).fill('10'); await click('速度 增加 0.5'); await click('✓ 完成有氧'); await toast('已儲存');
   await page.getByRole('heading', { name: '今天，好好練。' }).waitFor();
   await page.evaluate(() => navigator.serviceWorker.ready); await page.reload(); await page.waitForFunction(() => !!navigator.serviceWorker.controller);
@@ -37,9 +38,9 @@ try {
   await click('＋ 記錄下一組'); await click('✓ 完成這組'); await toast('第 3 組完成'); await page.reload(); await page.getByText('今天已完成 · 3 組').waitFor();
   // Exercise the same real fallback used when Safari denies clipboard permission.
   await page.evaluate(() => { Object.defineProperty(navigator, 'clipboard', { value: { writeText: () => Promise.reject(new Error('denied')) }, configurable: true }); });
-  await page.locator('[data-nav=today]').click(); await click('複製給 ChatGPT ↗'); await page.getByRole('textbox', { name: 'ChatGPT 訓練紀錄' }).waitFor(); assert.ok((await page.locator('.text-output').inputValue()).includes('45 kg × 10')); await click('複製文字'); await toast('文字已選取');
+  await page.locator('[data-nav=today]').click(); await click('複製給 ChatGPT ↗'); await page.getByRole('textbox', { name: 'ChatGPT 訓練紀錄' }).waitFor(); assert.ok((await page.locator('.text-output').inputValue()).includes('45 kg × 10')); assert.ok((await page.locator('.text-output').inputValue()).includes('坡度 3.5%')); await click('複製文字'); await toast('文字已選取');
   assert.deepEqual(errors, []);
-  const report = { engine: 'WebKit ' + await browser.version(), emulation: 'iPhone 13', passed: ['startup', 'strength repeat/editable controls', 'complete button visible without scrolling', 'warm-up reps/sets', 'cardio', 'IndexedDB persistence', 'origin stopped: reload and record via service worker', 'clipboard denied fallback', 'mobile layout'], errors, realIPhone: false };
+  const report = { engine: 'WebKit ' + await browser.version(), emulation: 'iPhone 13', passed: ['startup', 'strength repeat/editable controls', 'complete button visible without scrolling', 'warm-up reps/sets and treadmill incline', 'cardio', 'IndexedDB persistence', 'origin stopped: reload and record via service worker', 'clipboard denied fallback', 'mobile layout'], errors, realIPhone: false };
   await writeFile(new URL('../test-results/webkit-results.json', import.meta.url), JSON.stringify(report, null, 2)); console.log(JSON.stringify(report, null, 2));
 } catch (error) { await page.screenshot({ path: fileURLToPath(new URL('../test-results/webkit-failure.png', import.meta.url)), fullPage: true }); console.error(error); process.exitCode = 1; }
 finally { origin.kill(); await browser.close(); }

@@ -30,3 +30,18 @@ test('invalid imports rejected before mutation', () => {
   }
 });
 test('local calendar date is used', () => { assert.equal(dayKey(new Date(2026, 8, 25, 0, 5)), '2026-09-25'); });
+test('warm-up incline persists in backups, previous workouts and text exports', () => {
+  const data = initialData(), ex = data.exercises.find(e => e.name === 'Treadmill Warm-up');
+  const w = ensureWorkout(data, '2026-09-23');
+  w.warmupEntries.push({ id: uid(), exerciseId: ex.id, exerciseName: ex.name, note: '', order: 0, completed: true, speed: 6, duration: 5, reps: 0, sets: 0, incline: 3.5 });
+  const restored = validateData(JSON.parse(JSON.stringify(data)));
+  assert.equal(restored.workouts[0].warmupEntries[0].incline, 3.5);
+  assert.equal(lastEntry(restored, ex.id, 'warmup', '2026-09-25').incline, 3.5);
+  assert.match(workoutText(restored.workouts[0]), /6 km\/h\n坡度 3.5%\n5 min/);
+  delete w.warmupEntries[0].incline;
+  assert.equal(validateData(data).workouts[0].warmupEntries[0].incline, 0);
+  for (const incline of [-1, 101, null, '3', NaN]) {
+    w.warmupEntries[0].incline = incline;
+    assert.throws(() => validateData(data), /熱身坡度無效/);
+  }
+});

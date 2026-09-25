@@ -1,4 +1,4 @@
-const CACHE = 'one-more-set-v1';
+const CACHE = 'one-more-set-v2';
 const ROOT = new URL('./', self.location).href;
 const SHELL = ['./', './index.html', './styles.css', './app.js', './model.js', './storage.js', './manifest.json', './icons/favicon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 self.addEventListener('install', event => {
